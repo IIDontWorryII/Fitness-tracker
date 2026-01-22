@@ -1,0 +1,10 @@
+If your lecturer asks “why did you structure it this way?”
+
+You already have strong answers:
+
+- Clients isolate backend changes
+- Hooks derive data, not fetch it
+- Context manages app-level state, not HTTP
+- Pages orchestrate user flows
+- Docker validates production behavior
+- That is textbook reasoning 

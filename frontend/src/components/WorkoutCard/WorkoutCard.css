@@ -1,0 +1,65 @@
+/* Main card container styling */
+.workout-card {
+  /*
+  WorkoutCard.css
+
+  Styles for the small workout summary card used on the Workouts listing.
+  - Header, brief exercise list and footer link styling.
+*/
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(4px); /* dark grey/black background */
+  border: 1px solid #2a2e36; /* subtle border */
+  color: #fff; /* white text */
+  padding: 1rem;
+  border-radius: 12px; /* rounded edges */
+  width: 100%;
+  max-width: 400px;
+  /* layout spacing */
+  transition: 0.2s ease; /* smooth hover animation */
+  cursor: pointer;
+}
+
+/* When user hovers → slightly scale & glow with blue */
+.workout-card:hover {
+  transform: scale(1.02);
+  border-color: #3b82f6; /* bright blue border on hover */
+}
+
+/* Header: Name left, exercise count right */
+.workout-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Remove default spacing from header title */
+.workout-card-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* Unordered list that holds exercises */
+.workout-exercise-list {
+  list-style: none; /* remove bullets */
+  margin-top: 0.8rem;
+  padding: 0;
+}
+
+/* Each exercise line → name left | sets x reps right */
+.workout-exercise-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #2e323a;
+}
+
+/* Remove border from the last element */
+.workout-exercise-list li:last-child {
+  border-bottom: none;
+}
+
+.workout-card-footer {
+  margin-top: 1rem;
+  text-align: left;
+}

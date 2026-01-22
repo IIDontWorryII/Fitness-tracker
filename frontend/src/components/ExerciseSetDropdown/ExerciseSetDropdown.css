@@ -1,0 +1,143 @@
+/*
+  ExerciseSetDropdown.css
+
+  Styles for the set dropdown used in workout editing and session modes.
+  - Grid layout for set rows, inputs and action buttons.
+  - Animates open/close via `.exercise-set-dropdown-outer.expanded`.
+*/
+
+/* ============================================================
+  UNIVERSAL DROPDOWN — USED IN EDIT + START WORKOUT MODES
+  Matches styling from WorkoutDetailPage.css
+  ============================================================ */
+
+/* Outer wrapper controls expand animation */
+.exercise-set-dropdown-outer {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.35s ease;
+}
+
+.exercise-set-dropdown-outer.expanded {
+  max-height: 50rem;
+  opacity: 1;
+  transform: translateY(0);
+  margin-bottom: 5rem;
+}
+
+/* Inner panel box */
+.exercise-set-dropdown-inner {
+  margin-top: 12px;
+  padding: 16px;
+  background: #171717;
+  border-radius: 8px;
+}
+
+/* ------------------------------------------------------------
+   GRID LAYOUT (HEADER + ROWS)
+   ------------------------------------------------------------ */
+
+.exercise-set-header,
+.exercise-set-row {
+  display: grid;
+  column-gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.exercise-set-header {
+  font-size: 14px;
+  font-weight: 600;
+  color: #dddddd;
+  grid-template-columns: 3rem 5.8rem 3.7rem auto;
+}
+
+.exercise-set-row {
+  grid-template-columns: 2.6rem 5.2rem 4.2rem 4rem auto;
+}
+
+.set-number {
+  color: #ffffff;
+}
+
+.previous-value {
+  color: #aaaaaa;
+  font-size: 14px;
+  width: 4rem;
+}
+
+/* ------------------------------------------------------------
+   INPUTS
+   ------------------------------------------------------------ */
+
+.set-input {
+  width: 2.2rem;
+  height: 1.2rem;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #3a3a3a;
+  background: #111111;
+  color: white;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------
+   BUTTONS
+   ------------------------------------------------------------ */
+
+/* Remove set (edit mode) */
+.remove-set-btn {
+  width: 2.5rem;
+  height: 2.2rem;
+  border: none;
+  background: transparent;
+  color: #e66;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 0;
+}
+
+.remove-set-btn:hover {
+  color: #ff7b7b;
+}
+
+/* Complete set (Start Workout Mode) */
+.complete-set-btn {
+  width: 2.5rem;
+  height: 2.2rem;
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #666;
+}
+
+.complete-set-btn.done {
+  background: #4caf50;
+  border-color: #4caf50;
+  color: white;
+}
+
+/* Add new set */
+.add-set-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+}
+
+.add-set-btn:hover {
+  background: #2b2b2b;
+}

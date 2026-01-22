@@ -1,0 +1,27 @@
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.*
+
+# Build outputs
+dist/
+build/
+
+# Expo / React Native
+.expo/
+.expo-shared/
+android/
+ios/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,54 @@
+/* Wrapper */
+.all-activity-wrapper {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(4px);
+  color: #fff;
+}
+
+/* Header */
+.all-activity-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  background: #0f0f0f00;
+  padding: 10px 0 14px;
+  z-index: 10;
+}
+
+.all-activity-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Back button */
+.back-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  transform: translateY(-1px);
+}
+
+.back-btn:active {
+  transform: translateY(0px);
+}

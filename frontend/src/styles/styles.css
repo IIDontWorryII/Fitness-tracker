@@ -1,0 +1,43 @@
+/*
+  src/styles/styles.css
+
+  Global styles and variables used across the app.
+  - Keep this minimal: fonts, body background and general utilities.
+  - Prefer component-local CSS for most UI elements.
+*/
+
+/* Global colors & fonts */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #0d0f14; /* dark background */
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Page container */
+.page-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("../assets/gym_bg.jpg");
+  background-size: cover;        /* Make it fill the whole screen */
+  background-position: center;
+  background-attachment: fixed;  /* Parallax effect */
+  background-repeat: no-repeat;
+}
+
+/* Apply a dark semi-transparent overlay for readability */
+#root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* adjust transparency here */
+  backdrop-filter: blur(2px);
+  pointer-events: none;           /* no interference with clicks */
+  z-index: -1;
+}

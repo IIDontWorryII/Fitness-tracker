@@ -1,0 +1,15 @@
+.search-bar {
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: none;
+  margin-bottom: 1rem auto;
+
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(4px);
+  color: white;
+  font-size: 1rem;
+}
+
+.search-bar::placeholder {
+  color: #999;
+}

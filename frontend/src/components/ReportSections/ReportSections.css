@@ -1,0 +1,131 @@
+/* ---------- WEEKLY TIME SECTION ---------- */
+
+.weekly-time-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ========== CONSISTENCY / TRAINING OVERVIEW SECTIONS ========== */
+
+.stats-card {
+  background: #000000;
+  border: 1px solid #222;
+  padding: 20px 24px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.stats-label {
+  color: #bbb;
+  font-size: 16px;
+}
+
+.stats-value {
+  color: #7fffd4;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* ========== RECENT ACTIVITY SECTION ========== */
+
+.report-section {
+  margin-bottom: 40px;
+}
+
+.report-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.view-all-btn {
+  background: #242424;
+  border-radius: 8px;
+  border: 1px solid #333;
+  padding: 6px 14px;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ========== MUSCLE DISTRIBUTION SECTION ========== */
+
+/* Wrapper for text + chart */
+.muscle-distribution-wrapper {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* Left side column */
+.muscle-distribution-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 300px; /* ← give enough width to avoid wrapping */
+}
+
+/* One row per muscle */
+.muscle-distribution-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px; /* consistent spacing */
+}
+
+/* Muscle name */
+.muscle-label {
+  width: 90px; /* ← equal label width for perfect alignment */
+  color: #e0e0e0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Percentage */
+.muscle-percent {
+  width: 60px; /* ← aligns all percentages */
+  text-align: right;
+  color: #7fffd4;
+  font-weight: 600;
+}
+
+/* Sets */
+.muscle-sets {
+  text-align: right;
+  width: 70px; /* ← aligns all set counts */
+  color: #ccc;
+  opacity: 0.85;
+}
+
+/* ========== PR PREVIEW SECTION ========== */
+
+.pr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chart-placeholder,
+.recent-placeholder,
+.consistency-placeholder {
+  background: #202325;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+}

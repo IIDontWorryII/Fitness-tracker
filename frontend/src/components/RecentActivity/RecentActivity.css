@@ -1,0 +1,81 @@
+/* Timeline structure (unchanged) */
+.activity-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Card redesign */
+.activity-card {
+  flex: 1;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+
+  padding: 10px 12px; /* tighter */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.activity-card.clickable:hover {
+  background: #1c1c1c;
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+/* Compact title row */
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activity-header h3 {
+  font-size: 15px;
+}
+
+.activity-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.activity-date {
+  font-size: 13px;
+  color: #999;
+}
+
+/* NEW: Compact inline stats row */
+.activity-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.stat {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.label {
+  color: #777;
+}
+
+/* OPTIONAL: icons to improve scanning */
+.stat::before {
+  content: attr(data-icon);
+  font-size: 12px;
+  opacity: 0.7;
+}

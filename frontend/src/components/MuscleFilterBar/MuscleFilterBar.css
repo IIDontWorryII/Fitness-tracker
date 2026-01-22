@@ -1,0 +1,67 @@
+/*
+  MuscleFilterBar.css
+
+  Styles for the muscle filter chip row used in Explore and selection modals.
+*/
+
+/* -----------------------------------------
+  MUSCLE FILTER CONTAINER
+----------------------------------------- */
+.muscle-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+/* -----------------------------------------
+   MUSCLE CHIP
+----------------------------------------- */
+.muscle-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 60px;
+  height: 60px;
+
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(4px);
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.muscle-circle img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* -----------------------------------------
+   Hover
+----------------------------------------- */
+.muscle-circle:hover {
+  transform: translateY(-3px);
+  border-color: #666;
+}
+
+/* -----------------------------------------
+   ACTIVE (selected)
+----------------------------------------- */
+.muscle-circle.active {
+  border-color: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.18);
+  transform: translateY(-3px);
+}
+
+.muscle-circle.active:hover {
+  border-color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.22);
+}

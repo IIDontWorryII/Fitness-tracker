@@ -1,0 +1,129 @@
+/* =========================
+   PAGE LAYOUT
+========================= */
+
+.new-workout-page {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.new-workout-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.new-workout-field {
+  width: 100%;
+}
+
+.new-workout-input {
+  width: 100%;
+  padding: 1rem 0;
+
+  border-radius: 10px;
+  border: 1px solid #2a2f3a;
+  background-color: #161a20;
+  color: #ffffff;
+  font-size: 1rem;
+
+  outline: none;
+}
+
+.new-workout-input::placeholder {
+  color: #8b93a7;
+}
+
+.new-workout-input:focus {
+  border-color: #4ea1ff;
+  box-shadow: 0 0 0 1px rgba(78, 161, 255, 0.4);
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.new-workout-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Secondary (Add exercises) */
+.btn-secondary {
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  margin-top: 5rem;
+  padding: 0.9rem;
+
+  border-radius: 10px;
+  border: 1px dashed #4ea1ff;
+  background: transparent;
+
+  color: #4ea1ff;
+  font-weight: 600;
+  font-size: 1rem;
+
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(78, 161, 255, 0.1);
+}
+
+/* Primary (Save workout) */
+.btn-primary {
+  width: 100%;
+  padding: 1rem;
+
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #4ea1ff, #2f80ed);
+
+  color: white;
+  font-weight: 700;
+  font-size: 1.05rem;
+
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(78, 161, 255, 0.35);
+}
+
+/* =========================
+   SELECTED EXERCISES
+========================= */
+
+.new-workout-preview {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.preview-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #cfd6e4;
+}

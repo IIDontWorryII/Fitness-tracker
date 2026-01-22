@@ -1,0 +1,56 @@
+Frontend
+
+MyWorkout: 
+	
+	WorkoutsPage:
+	NewWorkoutPage:
+		ExerciseListModal:
+	WorkoutDetailPage:
+
+	StartWorkoutPage:
+	SummaryPage: 
+
+Explore Page (Informative page)
+	ExplorePage:
+		- refactor the file: explore page and ExerciseListModal both use the same filtering logic, but locally
+		extract the logic to a new file. 
+
+Report (Training statistics)
+	ReportPage:
+		- bug: click on RecentActivityCard doesnot show the snapshot, but the RecentActivityPage 
+	RecentActivityPage:
+		
+	PRHistoryPage:
+		
+
+Profile (User profile data and settings)
+	ProfilePage:
+	LoginPage:
+	SignupPage: 
+
+Backend: 
+
+	server:
+
+Later Refactoring:
+	- remove the usage of any on all pages
+	- simplify useEffects(for example: StartWorkoutPage)
+	- complete error handling
+	- update Docker images after the app is done
+
+
+21.01 - 22.01
+Website Release: 
+	1) Make muscle images load from api (MuscleRadarChart, ExerciseListModal, MuscleFilterBar)
+	2) add images to StartWorkoutPage ExerciseCards
+	2) Clean up the Design 
+	
+	3) Comment all code
+	4) Update Docker
+	5) Upload the project to GitHub
+
+22.01 - 25.01
+Last refinements:
+	1) Session snapshot sharing feature / Following other people + profilePage overwiew(counts as shared lists) 
+	2) responsive design for all Pages + css clean up
+	3) Update Docker

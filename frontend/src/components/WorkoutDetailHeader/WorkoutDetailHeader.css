@@ -1,0 +1,218 @@
+/*
+  WorkoutDetailHeader.css
+
+  Styles for the header and settings area used in the workout detail page.
+  - Layout and styling for title, settings menu, rename/delete modals and actions.
+*/
+
+/* ---------------------------------------------------------
+  1. HEADER + SETTINGS MENU
+  --------------------------------------------------------- */
+
+/* Header Grid Layout */
+.workout-detail-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.workout-detail-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Right side (Save/Cancel + Settings) */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Save / Cancel header buttons */
+.edit-header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-save,
+.btn-cancel {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+
+/* Settings wrapper — IMPORTANT FIX */
+.workout-settings {
+  position: relative;   /* Anchor for absolute menu */
+}
+
+/* 3-dot button */
+.workout-settings-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.workout-settings-button:hover {
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+}
+
+/* Dropdown menu — now correctly positioned */
+.workout-settings-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #1b1b1b;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 4px 0;
+  min-width: 150px;
+  z-index: 100;
+}
+
+.workout-settings-item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #e5e5e5;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.workout-settings-item:hover {
+  background-color: #2a2a2a;
+}
+
+.workout-settings-delete {
+  color: #f97373;
+}
+
+.workout-settings-delete:hover {
+  background-color: #3a1b1b;
+}
+
+/* ---------------------------------------------------------
+   1. MODALS (RENAME + DELETE)
+   --------------------------------------------------------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* --- Rename Modal --- */
+
+.rename-modal {
+  background: #1b1b1b;
+  border: 1px solid #333;
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+.rename-modal h3 {
+  margin-bottom: 12px;
+}
+
+.rename-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #111;
+  color: white;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+
+.rename-input:focus {
+  outline: none;
+  border-color: #777;
+}
+
+.rename-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* --- Delete Modal --- */
+
+.delete-modal {
+  background: #1b1b1b;
+  border: 1px solid #333;
+  padding: 20px;
+  border-radius: 12px;
+  width: 280px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.delete-modal h3 {
+  margin-bottom: 6px;
+}
+
+.delete-modal p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+.delete-modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-delete {
+  flex: 1;
+  margin-left: 8px;
+  padding: 8px 0;
+  border: none;
+  border-radius: 8px;
+  background: #c74545;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background: #dd5a5a;
+}
+
+
+.btn-save {
+  background: #4caf50;
+  color: white;
+}
+
+.btn-cancel {
+  background: #555;
+  color: white;
+}
+
+.btn-save:hover {
+  background: #5ec462;
+}
+
+.btn-cancel:hover {
+  background: #666;
+}

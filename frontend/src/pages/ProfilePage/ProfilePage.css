@@ -1,0 +1,139 @@
+.profile-page {
+  max-width: 70rem;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-label {
+  color: #aaa;
+}
+
+.profile-value {
+  font-weight: 600;
+}
+
+.logout-btn {
+  margin-top: 8px;
+  padding: 12px;
+  background: #ff4d4d;
+  color: white;
+  font-size: 15px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  background: #ff6b6b;
+}
+
+/* ===== Security / Passkeys ===== */
+
+.security-section {
+  margin-top: 24px;
+}
+
+.security-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.passkey-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.passkey-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.passkey-dot.enabled {
+  background-color: #4caf50; /* subtle green */
+}
+
+.passkey-dot.disabled {
+  background-color: #777;
+}
+
+.passkey-status-text {
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.passkey-description {
+  margin-top: 6px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.passkey-btn {
+  background: transparent;
+  border: 1px solid #444;
+  color: #eee;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.passkey-btn:hover {
+  border-color: #666;
+}
+
+.passkey-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-text {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+}
+
+.security-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  border: 1px solid var(--border-color);
+}
+
+.badge.enabled {
+  background: #e6f4ea;
+  color: #1e7e34;
+  border-color: #b7e1c1;
+}
+
+.badge.disabled {
+  background: #f1f3f5;
+  color: #6c757d;
+}

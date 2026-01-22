@@ -1,0 +1,23 @@
+/*
+  ExplorePage.css
+
+  Styles for the exercise exploration view:
+  - Search bar, muscle filter row and exercise grid
+  - Visual states for selected muscle chips
+*/
+
+.container {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+/* Exercise cards grid */
+.exercise-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}

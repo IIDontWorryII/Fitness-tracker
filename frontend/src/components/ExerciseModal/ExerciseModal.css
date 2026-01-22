@@ -1,0 +1,76 @@
+/*
+	ExerciseModal.css
+
+	Styles for the Exercise detail modal.
+	- Kept component-local; matches visual language of ExerciseListModal.
+	- Uses `.ex-modal` as the main panel selector.
+*/
+
+.ex-modal {
+	background-color: #1a1a1a;
+	color: #fff;
+	border-radius: 10px;
+	padding: 1rem;
+	width: 90%;
+	max-width: 700px;
+	max-height: 85vh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+@media (max-width: 768px) {
+	.ex-modal {
+		width: 100%;
+		height: 100vh;
+		border-radius: 0;
+	}
+}
+
+.ex-modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.ex-modal-close {
+	background: none;
+	border: none;
+	font-size: 1.25rem;
+	color: #fff;
+	cursor: pointer;
+}
+
+.ex-thumb img,
+.exercise-img {
+	width: 80px;
+	height: 80px;
+	border-radius: 8px;
+	object-fit: cover;
+}
+
+.ex-title h2 {
+	margin: 0;
+	font-size: 1.2rem;
+}
+
+.ex-muscle {
+	color: #ccc;
+	margin-top: 4px;
+}
+
+.ex-modal-body {
+	margin-top: 12px;
+	overflow-y: auto;
+}
+
+.ex-description h4 {
+	margin: 0 0 8px 0;
+}
+
+.ex-description p {
+	margin: 0;
+	color: #ddd;
+}
+
+

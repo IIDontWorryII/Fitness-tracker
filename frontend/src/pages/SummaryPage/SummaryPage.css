@@ -1,0 +1,98 @@
+.summary-container {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 20px;
+  color: #fff;
+  background: #0f0f0f;
+  min-height: 100vh;
+}
+
+.summary-title {
+  text-align: center;
+  font-size: 35px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.summary-section {
+  background: #151515;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #222;
+}
+
+.summary-stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 15px;
+}
+
+.summary-stat span {
+  color: #9a9a9a;
+}
+
+.summary-stat strong {
+  font-weight: 600;
+}
+
+/* Muscle Distribution */
+.muscle-distribution-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.muscle-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+.muscle-name {
+  color: #dcdcdc;
+}
+
+.muscle-percent {
+  color: #00c67a;
+  font-weight: 600;
+}
+
+/* PRs */
+.pr-list {
+  margin-top: 10px;
+  padding-left: 18px;
+}
+
+.pr-item {
+  margin-bottom: 6px;
+  color: #ffd26f;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.no-pr {
+  color: #777;
+  font-size: 14px;
+}
+
+/* Back button */
+.back-to-workout-btn {
+  display: block;
+  margin-top: 25px;
+  text-align: center;
+  padding: 12px;
+  background: #242424;
+  border-radius: 10px;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+.pr-badge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}

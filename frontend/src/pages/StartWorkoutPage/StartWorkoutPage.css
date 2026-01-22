@@ -1,0 +1,133 @@
+/*
+  StartWorkoutPage.css
+
+  Styles for the running workout view:
+  - Header (timer + live stats), exercise list and per-set controls
+  - Buttons for finishing and completing sets
+  - Scoped to the StartWorkout page
+*/
+
+.start-workout-page {
+  color: white;
+  padding-bottom: 3rem;
+}
+
+/* HEADER */
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.timer-display {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.session-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* EXERCISE CARDS */
+
+.muscle-label {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-bottom: 0.8rem;
+}
+
+/* SETS TABLE */
+.sets-list {
+  margin-top: 0.6rem;
+}
+
+.sets-header span,
+.sets-row span {
+  display: flex;
+  align-items: center;
+}
+
+.sets-header {
+  display: grid;
+  grid-template-columns: 4rem 6rem 3.5rem 3rem; /* last column empty in header */
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #dddddd;
+  margin-bottom: 0.6rem;
+}
+
+.sets-row {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 10rem 10rem 4rem 4rem 3rem;
+  column-gap: 5rem;
+  margin-bottom: 0.6rem;
+}
+
+.set-row input {
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #111;
+  color: white;
+}
+
+/* DONE BUTTON */
+.done-button {
+  width: 2.5rem;
+  border: none;
+  padding: 4px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #222;
+  color: #888;
+  font-size: 1.2rem;
+  transition: 0.2s;
+}
+
+.done-button.done {
+  background: #26a269;
+  color: white;
+}
+
+/* FINISH BUTTON */
+.finish-button {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #e53935;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.finish-button:hover {
+  background: #c62828;
+}
+
+.previous-value {
+  color: #888;
+  font-size: 0.85rem;
+  min-width: 70px;
+  display: inline-block;
+  text-align: center;
+}
