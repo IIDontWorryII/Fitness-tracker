@@ -1,3 +1,22 @@
+/*
+  ============================================================
+  Datei: AuthContext.tsx
+
+  Rolle im Projekt:
+  Diese Datei implementiert den globalen Authentifizierungs-
+  Zustand der Web App.
+
+  Verantwortung:
+  - Kennt den aktuellen Benutzer
+  - Weiss, ob der Benutzer eingeloggt ist
+  - Stellt Login, Signup und Logout Funktionen bereit
+
+  Architektur:
+  - React Context fuer globalen State
+  - Kein Auth-Status in einzelnen Komponenten
+  ============================================================
+*/
+
 import React, {
   createContext,
   useContext,
@@ -12,9 +31,10 @@ import {
   logoutUser,
 } from "../api/authClient";
 
-/* =========================
-   User model
-========================= */
+/*
+  Typ des authentifizierten Benutzers.
+  Entspricht exakt der /auth/me API Response.
+*/
 type AuthUser = {
   id: string;
   email: string;
@@ -25,9 +45,10 @@ type AuthUser = {
   passkeysCount: number;
 };
 
-/* =========================
-   Context contract
-========================= */
+/*
+  Vertrag des Auth Contexts.
+  Definiert, was Konsumenten nutzen duerfen.
+*/
 interface AuthContextType {
   user: AuthUser | null;
   isAuthenticated: boolean;
@@ -51,7 +72,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  /* Load user on app start */
+  /*
+    Initialer Auth-Check beim App-Start.
+
+    Zweck:
+    - Pruefen, ob eine Session existiert
+    - Benutzer nach Page Reload wiederherstellen
+  */
+
   useEffect(() => {
     async function loadUser() {
       try {
@@ -127,6 +155,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  /*
+    Aktualisiert den Benutzer explizit.
+    Wird z.B. nach OAuth oder Passkey Login verwendet.
+  */
   const refreshUser = async () => {
     try {
       const me = await fetchMe();
@@ -153,9 +185,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
-/* =========================
-   Hook
-========================= */
+/*
+  Custom Hook fuer den AuthContext.
+*/
 export function useAuth(): AuthContextType {
   const ctx = useContext(AuthContext);
   if (!ctx) {

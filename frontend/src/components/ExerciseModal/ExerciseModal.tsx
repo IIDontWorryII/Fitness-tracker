@@ -6,7 +6,6 @@
   - Wrapped by reusable `Modal` component for consistent behavior.
 */
 
-import React from "react";
 import type { Exercise } from "../../types";
 import Modal from "../Modal/Modal";
 import "./ExerciseModal.css";

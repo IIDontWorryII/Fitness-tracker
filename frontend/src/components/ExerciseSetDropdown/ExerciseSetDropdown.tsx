@@ -6,7 +6,6 @@
   - Used by `WorkoutDetailExerciseList` and the start-workout flow.
 */
 
-import React from "react";
 import "./ExerciseSetDropdown.css";
 
 export type ExerciseSet = {

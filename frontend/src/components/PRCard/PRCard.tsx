@@ -1,4 +1,3 @@
-import React from "react";
 import "./PRCard.css";
 
 interface Props {
@@ -10,14 +9,20 @@ interface Props {
   image?: string;
 }
 
-export default function PRCard({ name, muscle, weight, reps, date, image }: Props) {
+export default function PRCard({
+  name,
+  muscle,
+  weight,
+  reps,
+  date,
+  image,
+}: Props) {
   return (
     <div className="prcard">
-      
       {/* Image */}
       <div className="prcard-img-wrapper">
         {image ? (
-          <img src={image} alt={name} className="prcard-img"/>
+          <img src={image} alt={name} className="prcard-img" />
         ) : (
           <div className="prcard-img placeholder" />
         )}
@@ -40,7 +45,6 @@ export default function PRCard({ name, muscle, weight, reps, date, image }: Prop
           Achieved on <strong>{new Date(date).toLocaleDateString()}</strong>
         </div>
       </div>
-
     </div>
   );
 }

@@ -22,7 +22,7 @@ type HistoryExercise = {
 };
 
 type HistoryEntry = {
-  id: string; // 🔧 normalized from _id
+  id: string;
   workoutId: string;
   name: string;
   date: string;
@@ -53,17 +53,6 @@ function getIsoWeek(date: Date) {
   return Math.ceil(((tmp.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }
 
-function getWeekDateRange(year: number, week: number) {
-  const firstDay = new Date(Date.UTC(year, 0, 1));
-  const dayNum = firstDay.getUTCDay() || 7;
-  const diff = week * 7 - (dayNum - 1);
-
-  const startDate = new Date(Date.UTC(year, 0, diff));
-  const endDate = new Date(Date.UTC(year, 0, diff + 6));
-
-  return { startDate, endDate };
-}
-
 function formatWeekRange(start: Date, end: Date) {
   const startDay = start.getUTCDate();
   const endDay = end.getUTCDate();
@@ -87,34 +76,9 @@ function formatWeekRange(start: Date, end: Date) {
   return `${startDay}-${endDay} ${endMonth}`;
 }
 
-function getLastNWeeks(n: number) {
-  const now = new Date();
-  const weeks: { year: number; week: number }[] = [];
-
-  for (let i = n - 1; i >= 0; i--) {
-    const d = new Date(now);
-    d.setUTCDate(d.getUTCDate() - i * 7);
-
-    weeks.push({
-      year: d.getUTCFullYear(),
-      week: getIsoWeek(d),
-    });
-  }
-
-  return weeks;
-}
-
 function weekKey(date: Date) {
   const monday = startOfIsoWeek(date);
   return monday.toISOString().slice(0, 10); // YYYY-MM-DD (Monday)
-}
-
-function getIsoYear(date: Date) {
-  const tmp = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-  );
-  tmp.setUTCDate(tmp.getUTCDate() + 4 - (tmp.getUTCDay() || 7));
-  return tmp.getUTCFullYear();
 }
 
 function startOfIsoWeek(date: Date) {
@@ -137,7 +101,6 @@ export function useBackendReportData(timeRange: TimeRange = "month") {
 
   /* =========================
      LOAD HISTORY (ONCE)
-     FIX 1: normalize id
   ========================= */
   useEffect(() => {
     async function load() {
@@ -198,7 +161,6 @@ export function useBackendReportData(timeRange: TimeRange = "month") {
 
   /* =========================
      TRAINING OVERVIEW
-     FIX 2: typed reduce()
   ========================= */
   const filteredStats = useMemo(() => {
     let workouts = filteredHistory.length;
@@ -257,13 +219,13 @@ export function useBackendReportData(timeRange: TimeRange = "month") {
   const weeklyTime = useMemo(() => {
     const byWeek: Record<string, number> = {};
 
-    // 1️⃣ Aggregate history by ISO-week Monday
+    // Aggregate history by ISO-week Monday
     history.forEach((w) => {
       const key = weekKey(new Date(w.date));
       byWeek[key] = (byWeek[key] ?? 0) + w.durationSeconds / 60;
     });
 
-    // 2️⃣ Build last 12 ISO weeks (Mondays)
+    // Build last 12 ISO weeks (Mondays)
     const weeks: { label: string; minutes: number }[] = [];
 
     const currentMonday = startOfIsoWeek(new Date());
@@ -421,10 +383,6 @@ export function useBackendReportData(timeRange: TimeRange = "month") {
     };
   }, [history]);
 
-  /* =========================
-     RETURN (NO EARLY RETURNS!)
-    FIX 3: NEVER return early
-  ========================= */
   return {
     filteredStats,
     filteredMuscleDistribution,

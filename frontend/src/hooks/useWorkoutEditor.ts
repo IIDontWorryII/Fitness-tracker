@@ -22,7 +22,7 @@ export function useWorkoutEditor(
   allExercises: Exercise[]
 ) {
   const [editableExercises, setEditableExercises] = useState<WorkoutExercise[]>(
-    JSON.parse(JSON.stringify(initialExercises)) // deep copy
+    JSON.parse(JSON.stringify(initialExercises))
   );
 
   const [expandedId, setExpandedId] = useState<string | null>(null);

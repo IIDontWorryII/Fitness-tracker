@@ -26,7 +26,6 @@ export default function RecentActivityPage() {
     const entry = recentActivity.find((e) => e.id === sessionId);
     if (!entry) return;
 
-    // Correct SummaryPage route
     navigate(`/workout/${entry.workoutId}/summary/${entry.id}`, {
       state: { from: "reports" },
     });

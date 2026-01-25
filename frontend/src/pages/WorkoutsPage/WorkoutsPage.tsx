@@ -2,7 +2,6 @@
  * WorkoutsPage.tsx
  *
  * Page: List saved workouts.
- * - Uses CSS Grid instead of Bootstrap
  */
 
 import { useEffect, useState, useMemo } from "react";

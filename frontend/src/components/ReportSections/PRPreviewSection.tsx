@@ -6,7 +6,7 @@ import type { Exercise } from "../../types";
 import "./ReportSections.css";
 
 interface PRItem {
-  id: string; // in deinem Projekt scheint das exerciseId zu sein (siehe PRHistoryPage)
+  id: string;
   muscle: string;
   name: string;
   weight: number;
@@ -30,12 +30,10 @@ export default function PRPreviewSection({
   const valid = personalRecords.filter((pr) => pr.weight > 0);
   const preview = valid.slice(0, 3);
 
-  // Build lookup once for fast access
   const exerciseMap = React.useMemo(() => {
     return new Map<string, Exercise>(exercises.map((e) => [e.id, e]));
   }, [exercises]);
 
-  // Optional fallback by name (in case PR id is NOT the exercise id in some entries)
   const exerciseByName = React.useMemo(() => {
     return new Map<string, Exercise>(
       exercises.map((e) => [e.name.toLowerCase(), e])

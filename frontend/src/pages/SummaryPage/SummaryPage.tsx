@@ -27,14 +27,13 @@ type HistoryEntry = {
 };
 
 const SummaryPage = () => {
-  const { workoutId, sessionId } = useParams();
+  const { sessionId } = useParams();
   const location = useLocation();
   const from = location.state?.from;
 
   const [entry, setEntry] = useState<HistoryEntry | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const { personalRecords } = useBackendReportData();
   const { sessionPRs } = useBackendReportData();
 
   const prMessages = sessionId ? (sessionPRs[sessionId] ?? []) : [];

@@ -83,29 +83,7 @@ export type WorkoutHistoryEntry = {
   }[];
 };
 
-// /** An Exercise object (stored once in the master list) */
-// export interface Exercise {
-//   id: string;         // stable unique id (e.g. "ex-001") - used by workouts to reference it
-//   name: string;       // human readable name ("Bench Press")
-//   muscle: MuscleGroup;// primary muscle group targeted
-//   thumbnail: string; // optional - path/URL to small image/icon
-//   description?: string;     // optional short tips or description
-//   // optional user-specific values; left on the Exercise shape for simplicity
-//   // (they may be omitted when using the master DB)
-//   sets?: number;
-//   reps?: number;
-// }
-
 export interface ExerciseCardProps {
   exercise: Exercise;
   onClick: (exercise: Exercise) => void;
 }
-
-/** A Workout contains a name and an ordered array of exercise IDs.
- *  We store exercise references (ids) instead of full objects to avoid duplication.
- */
-// export interface Workout {
-//   id: string;             // unique id for the workout (e.g. "w-2025-01")
-//   name: string;           // workout title ("Push Day")
-//   exercises: string[];    // array of exercise ids, ordered
-// }

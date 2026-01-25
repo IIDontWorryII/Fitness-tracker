@@ -1,4 +1,3 @@
-import React from "react";
 import "./RecentActivity.css";
 
 export interface RecentEntry {
