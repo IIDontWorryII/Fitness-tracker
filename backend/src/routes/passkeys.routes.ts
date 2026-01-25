@@ -59,7 +59,7 @@ const router = Router();
   - der Domain deiner Anwendung
   - muss mit Origin uebereinstimmen
 */
-const RP_ID = process.env.RP_ID!;
+const RP_ID = process.env.RP_ID ?? "localhost";
 
 /*
   Erlaubte Origins fuer WebAuthn.
