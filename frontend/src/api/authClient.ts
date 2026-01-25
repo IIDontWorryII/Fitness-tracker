@@ -15,6 +15,17 @@ export async function fetchMe(): Promise<AuthUser> {
   return apiFetch<AuthUser>("/api/auth/me");
 }
 
+export async function updateMyName(name: string) {
+  return apiFetch("/api/user/me", {
+    method: "PATCH",
+    body: JSON.stringify({ name }),
+  });
+}
+
+export async function deleteMyAccount() {
+  await apiFetch("/api/user/me", { method: "DELETE" });
+}
+
 export async function loginUser(data: {
   email: string;
   password: string;

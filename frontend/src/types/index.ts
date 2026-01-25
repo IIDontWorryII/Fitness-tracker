@@ -52,6 +52,8 @@ export interface Workout {
   id: string;
   name: string;
   exercises: WorkoutExercise[];
+
+  isPublic?: boolean;
 }
 
 export interface ExerciseStats {

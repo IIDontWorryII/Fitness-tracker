@@ -35,10 +35,25 @@
   border: 1px solid #333;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .add-exercise-btn:hover {
   background: #333;
   border-color: #555;
+}
+
+.workout-visibility-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+.workout-visibility-toggle label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
 }

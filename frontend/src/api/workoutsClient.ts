@@ -55,3 +55,33 @@ export async function deleteWorkout(workoutId: string): Promise<void> {
     method: "DELETE",
   });
 }
+
+/* ===================== PUBLIC ===================== */
+
+export async function fetchPublicWorkouts(): Promise<Workout[]> {
+  const raw = await apiFetch<any[]>("/api/workouts/public");
+  return raw.map(normalize);
+}
+
+export async function fetchPublicWorkoutById(id: string): Promise<Workout> {
+  const raw = await apiFetch<any>(`/api/workouts/public/${id}`);
+  return normalize(raw);
+}
+
+export async function updateWorkoutVisibility(
+  id: string,
+  isPublic: boolean
+): Promise<Workout> {
+  const raw = await apiFetch<any>(`/api/workouts/${id}/visibility`, {
+    method: "PATCH",
+    body: JSON.stringify({ isPublic }),
+  });
+  return normalize(raw);
+}
+
+export async function cloneWorkout(workoutId: string): Promise<Workout> {
+  const raw = await apiFetch<any>(`/api/workouts/${workoutId}/clone`, {
+    method: "POST",
+  });
+  return normalize(raw);
+}

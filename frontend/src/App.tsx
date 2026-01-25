@@ -6,6 +6,8 @@ import NavBar from "./components/NavBar/NavBar";
 import WorkoutsPage from "./pages/WorkoutsPage/WorkoutsPage";
 import NewWorkoutPage from "./pages/NewWorkoutPage/NewWorkoutPage";
 import ExplorePage from "./pages/ExplorePage/ExplorePage";
+import CommunityWorkoutsPage from "./pages/CommunityWorkoutsPage/CommunityWorkoutsPage";
+import PublicWorkoutDetailPage from "./pages/PublicWorkoutDetailPage/PublicWorkoutdetailPage";
 import WorkoutDetailPage from "./pages/WorkoutDetailPage/WorkoutDetailPage";
 import StartWorkoutPage from "./pages/StartWorkoutPage/StartWorkoutPage";
 import SummaryPage from "./pages/SummaryPage/SummaryPage";
@@ -51,6 +53,19 @@ function App() {
           }
         />
 
+        <Route
+          path="/explore/community"
+          element={
+            <ProtectedRoute>
+              <CommunityWorkoutsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/explore/community/:workoutId"
+          element={<PublicWorkoutDetailPage />}
+        />
         <Route
           path="/report"
           element={

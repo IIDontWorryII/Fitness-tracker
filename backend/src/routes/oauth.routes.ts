@@ -1,26 +1,78 @@
+/*
+  ============================================================
+  Datei: oauth.routes.ts
+
+  Rolle im Projekt:
+  Diese Datei implementiert OAuth Login mit GitHub.
+  Benutzer koennen sich mit ihrem GitHub Account anmelden
+  oder ihren bestehenden Account mit GitHub verknuepfen.
+
+  Enthaltene Endpunkte:
+  - GET  /api/auth/oauth/github/start
+  - GET  /api/auth/oauth/github/callback
+  - POST /api/auth/oauth/github/disconnect
+
+  Sicherheitskonzept:
+  - OAuth Authorization Code Flow
+  - Schutz gegen CSRF durch state Parameter
+  - Serverseitige Sessions fuer Authentifizierung
+  ============================================================
+*/
+
 import { Router } from "express";
 import { UserModel } from "../data/users.store";
 import crypto from "crypto";
 
 const router = Router();
 
+/*
+  OAuth Client Konfiguration.
+
+  Diese Werte stammen aus:
+  GitHub Developer Settings
+
+  Sie identifizieren:
+  - deine Applikation (client_id)
+  - deinen Server (client_secret)
+*/
 const CLIENT_ID = process.env.GITHUB_CLIENT_ID!;
 const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET!;
 const REDIRECT_URI = process.env.GITHUB_REDIRECT_URL!;
 
+/*
+  Normalisierung der Email-Adresse.
+  Wichtig fuer Account Linking und Konsistenz.
+*/
 function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
 }
 
-/**
- * STEP 1: Redirect user to GitHub
- * GET /api/auth/oauth/github/start
- */
+/*
+  ============================================================
+  STEP 1: Redirect zu GitHub
+  GET /api/auth/oauth/github/start
+
+  Zweck:
+  - Startet den OAuth Login Flow
+  - Leitet den Benutzer zu GitHub weiter
+  ============================================================
+*/
 router.get("/github/start", (req, res) => {
+  /*
+    state Parameter zum Schutz gegen CSRF Angriffe.
+
+    Der Wert:
+    - wird zufaellig generiert
+    - in der Session gespeichert
+    - spaeter im Callback verifiziert
+  */
   const state = crypto.randomUUID();
 
   (req.session as any).oauthState = state;
 
+  /*
+    Aufbau der GitHub Authorization URL.
+  */
   const params = new URLSearchParams({
     client_id: CLIENT_ID,
     redirect_uri: REDIRECT_URI,
@@ -28,27 +80,47 @@ router.get("/github/start", (req, res) => {
     state,
   });
 
+  // Browser wird zu GitHub umgeleitet
   res.redirect(`https://github.com/login/oauth/authorize?${params}`);
 });
 
-/**
- * STEP 2: GitHub redirects back here
- * GET /api/auth/oauth/github/callback
- */
+/*
+  ============================================================
+  STEP 2: Callback von GitHub
+  GET /api/auth/oauth/github/callback
+
+  Zweck:
+  - Verarbeitet die Antwort von GitHub
+  - Tauscht Code gegen Access Token
+  - Erstellt oder verknuepft einen User
+  - Baut eine Session auf
+  ============================================================
+*/
 router.get("/github/callback", async (req, res) => {
   const { code, state } = req.query;
 
+  /*
+    Verifikation des state Parameters.
+
+    Sicherheitsaspekt:
+    - Schutz gegen CSRF
+    - Stellt sicher, dass der Callback zu dieser Session gehoert
+  */
   if (typeof state !== "string" || state !== (req.session as any).oauthState) {
     return res.status(400).send("Invalid OAuth state");
   }
 
+  // state wird nach Verwendung entfernt
   delete (req.session as any).oauthState;
 
   if (typeof code !== "string") {
     return res.status(400).send("Missing code");
   }
 
-  // Exchange code → access token
+  /*
+    Austausch des Authorization Codes gegen ein Access Token.
+    Dieser Schritt erfolgt serverseitig.
+  */
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
@@ -71,7 +143,9 @@ router.get("/github/callback", async (req, res) => {
 
   const accessToken = tokenData.access_token;
 
-  // Fetch GitHub user profile
+  /*
+    Abruf des GitHub Benutzerprofils.
+  */
   const userRes = await fetch("https://api.github.com/user", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -86,7 +160,10 @@ router.get("/github/callback", async (req, res) => {
     name: string | null;
   };
 
-  // Fetch emails if GitHub hides email
+  /*
+    GitHub liefert oft keine Email direkt.
+    In diesem Fall wird eine separate API aufgerufen.
+  */
   let email = ghUser.email;
 
   if (!email) {
@@ -103,6 +180,7 @@ router.get("/github/callback", async (req, res) => {
       verified: boolean;
     }>;
 
+    // Es wird nur eine primaere und verifizierte Email akzeptiert
     email = emails.find((e) => e.primary && e.verified)?.email ?? null;
   }
 
@@ -112,13 +190,23 @@ router.get("/github/callback", async (req, res) => {
 
   const normalizedEmail = normalizeEmail(email);
 
-  // 1) Find by GitHub ID (already linked)
+  /*
+    ============================================================
+    USER ZUORDNUNG
+    ============================================================
+  */
+
+  // 1) Suche nach bereits verknuepfter GitHub ID
   let user = await UserModel.findOne({ "oauth.github.id": ghUser.id });
 
-  // 2) Link by email (IMPORTANT: normalized)
+  // 2) Falls nicht gefunden: Verknuepfung ueber Email
   if (!user) {
     user = await UserModel.findOne({ email: normalizedEmail });
 
+    /*
+      Sicherheitscheck:
+      Verhindert, dass ein Account mit zwei GitHub IDs verknuepft wird.
+    */
     if (user.oauth?.github?.id && user.oauth.github.id !== ghUser.id) {
       return res
         .status(409)
@@ -135,7 +223,7 @@ router.get("/github/callback", async (req, res) => {
     }
   }
 
-  // 3) Create new user (store normalized email)
+  // 3) Falls kein User existiert: neuen User erstellen
   if (!user) {
     user = await UserModel.create({
       email: normalizedEmail,
@@ -149,10 +237,16 @@ router.get("/github/callback", async (req, res) => {
     });
   }
 
-  // Create session
+  /*
+    Aufbau der Session.
+    Gleiches Verfahren wie bei allen anderen Login-Methoden.
+  */
   (req.session as any).userId = user._id.toString();
 
-  // Redirect back to frontend
+  /*
+    Redirect zurueck zum Frontend.
+    Unterschiedliche Ziele fuer Web und Mobile.
+  */
   const platform = req.query.platform;
 
   if (platform === "mobile") {
@@ -162,10 +256,15 @@ router.get("/github/callback", async (req, res) => {
   res.redirect("http://localhost:5173/workouts");
 });
 
-/**
- * DISCONNECT GITHUB
- * POST /api/auth/oauth/github/disconnect
- */
+/*
+  ============================================================
+  DISCONNECT GITHUB
+  POST /api/auth/oauth/github/disconnect
+
+  Zweck:
+  Entfernt die GitHub Verknuepfung vom User Account.
+  ============================================================
+*/
 router.post("/github/disconnect", async (req, res) => {
   const userId = (req.session as any).userId;
   if (!userId) return res.sendStatus(401);
@@ -177,7 +276,7 @@ router.post("/github/disconnect", async (req, res) => {
     return res.status(400).json({ message: "GitHub not connected" });
   }
 
-  // Remove GitHub link
+  // Entfernt die GitHub Verknuepfung
   user.oauth.github = undefined;
 
   await user.save();

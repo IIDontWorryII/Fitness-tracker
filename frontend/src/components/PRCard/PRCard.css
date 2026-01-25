@@ -5,7 +5,9 @@
   padding: 10px 12px;
   display: flex;
   gap: 12px;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .prcard:hover {
@@ -15,11 +17,11 @@
 }
 
 .prcard-img-wrapper {
-  width: 50px;
-  height: 50px;
-  background: #222;
+  width: 64px;
+  height: 64px;
   border-radius: 8px;
   overflow: hidden;
+  background: #1f1f1f;
 }
 
 .prcard-img {
@@ -62,4 +64,3 @@
   font-size: 12px;
   color: #888;
 }
-

@@ -7,6 +7,7 @@ pnpm-lock.yaml
 # Environment variables
 .env
 .env.*
+!.env.example
 
 # Build outputs
 dist/
@@ -25,3 +26,5 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+
+ToDo.txt

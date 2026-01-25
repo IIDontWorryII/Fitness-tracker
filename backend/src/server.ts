@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
 import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
 import workoutsRoutes from "./routes/workouts.routes";
 import workoutHistoryRoutes from "./routes/workoutHistory.routes";
 import exerciseRoutes from "./routes/exercises.routes";
@@ -48,6 +49,7 @@ app.use(
 );
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/exercises", exerciseRoutes);
 app.use("/api/workouts", workoutsRoutes);
 app.use("/api/workout-history", workoutHistoryRoutes);

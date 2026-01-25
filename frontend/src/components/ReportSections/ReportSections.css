@@ -115,6 +115,7 @@
 /* ========== PR PREVIEW SECTION ========== */
 
 .pr-list {
+  margin-left: -1rem;
   display: flex;
   flex-direction: column;
   gap: 12px;

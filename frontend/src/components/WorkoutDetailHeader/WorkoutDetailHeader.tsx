@@ -7,12 +7,16 @@
   - Pure presentational + small UI handlers only.
 */
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./WorkoutDetailHeader.css";
 
 type WorkoutHeaderProps = {
   name: string;
   isEditMode: boolean;
+
+  /* VISIBILITY */
+  isPublic: boolean;
+  onTogglePublic: (nextValue: boolean) => void;
 
   isSettingsOpen: boolean;
   onToggleSettings: () => void;
@@ -34,11 +38,15 @@ type WorkoutHeaderProps = {
   onOpenDelete: () => void;
   onCloseDelete: () => void;
   onConfirmDelete: () => void;
+
+  onCloseSettings: () => void;
 };
 
 const WorkoutHeader: React.FC<WorkoutHeaderProps> = ({
   name,
   isEditMode,
+  isPublic,
+  onTogglePublic,
   isSettingsOpen,
   onToggleSettings,
   onEnterEdit,
@@ -54,14 +62,54 @@ const WorkoutHeader: React.FC<WorkoutHeaderProps> = ({
   onOpenDelete,
   onCloseDelete,
   onConfirmDelete,
+  onCloseSettings,
 }) => {
+  const settingsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!isSettingsOpen) return;
+
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        settingsRef.current &&
+        !settingsRef.current.contains(event.target as Node)
+      ) {
+        onCloseSettings();
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSettingsOpen, onCloseSettings]);
+
   return (
     <>
       <div className="workout-detail-header">
-        <h2 className="workout-detail-title">{name}</h2>
+        {/* LEFT SIDE */}
+        <div className="header-left">
+          <h2 className="workout-detail-title">{name}</h2>
 
+          <div className="workout-visibility-toggle">
+            <span className="visibility-label">
+              {isPublic ? "Public" : "Private"}
+            </span>
+
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={isPublic}
+                onChange={(e) => onTogglePublic(e.target.checked)}
+              />
+              <span className="slider" />
+            </label>
+          </div>
+        </div>
+
+        {/* RIGHT SIDE */}
         <div className="header-right">
-          {/* Edit mode buttons */}
           {isEditMode && (
             <div className="edit-header-buttons">
               <button className="btn-cancel" onClick={onCancelEdit}>
@@ -73,8 +121,7 @@ const WorkoutHeader: React.FC<WorkoutHeaderProps> = ({
             </div>
           )}
 
-          {/* Settings menu */}
-          <div className="workout-settings">
+          <div className="workout-settings" ref={settingsRef}>
             <button
               className="workout-settings-button"
               onClick={onToggleSettings}

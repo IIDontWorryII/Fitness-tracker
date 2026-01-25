@@ -21,6 +21,8 @@ import {
   removeExerciseFromWorkout,
 } from "../../utils/workoutUtils";
 
+import { updateWorkoutVisibility } from "../../api/workoutsClient";
+
 import ExerciseModal from "../../components/ExerciseModal/ExerciseModal";
 import ExerciseListModal from "../../components/ExerciseListModal/ExerciseListModal";
 
@@ -51,6 +53,8 @@ const WorkoutDetailPage = () => {
   const [workout, setWorkout] = useState<Workout | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const [isPublic, setIsPublic] = useState(false);
+
   /* ========================= EDIT MODE STATE ========================= */
   const [isEditMode, setIsEditMode] = useState(false);
   const [editableExercises, setEditableExercises] = useState<WorkoutExercise[]>(
@@ -71,6 +75,7 @@ const WorkoutDetailPage = () => {
 
   /* ========================== SETTINGS MENU ========================== */
   const toggleSettings = () => setIsSettingsOpen((p) => !p);
+  const closeSettings = () => setIsSettingsOpen(false);
 
   const handleConfirmRename = async () => {
     if (!workout) return;
@@ -115,6 +120,15 @@ const WorkoutDetailPage = () => {
     setWorkout(updated);
     setIsEditMode(false);
     setExpandedId(null);
+  };
+
+  const handleTogglePublic = async (nextValue: boolean) => {
+    if (!workout) return;
+
+    const updated = await updateWorkoutVisibility(workout.id, nextValue);
+
+    setWorkout(updated);
+    setIsPublic(updated.isPublic ?? false);
   };
 
   /* ======================= EDIT MODE HELPERS ======================= */
@@ -166,6 +180,7 @@ const WorkoutDetailPage = () => {
 
         setEditableExercises(w.exercises ?? []);
         setRenameValue(w.name);
+        setIsPublic(w.isPublic ?? false);
       } catch {
         setWorkout(null);
       } finally {
@@ -204,6 +219,9 @@ const WorkoutDetailPage = () => {
       <WorkoutHeader
         name={workout.name}
         isEditMode={isEditMode}
+        /* VISIBILITY */
+        isPublic={isPublic}
+        onTogglePublic={handleTogglePublic}
         isSettingsOpen={isSettingsOpen}
         onToggleSettings={toggleSettings}
         onEnterEdit={handleEnterEdit}
@@ -219,6 +237,7 @@ const WorkoutDetailPage = () => {
         onOpenDelete={() => setShowDeleteConfirm(true)}
         onCloseDelete={() => setShowDeleteConfirm(false)}
         onConfirmDelete={handleConfirmDelete}
+        onCloseSettings={closeSettings}
       />
 
       {!isEditMode && (

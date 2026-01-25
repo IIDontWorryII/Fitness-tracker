@@ -2,24 +2,27 @@
  * ExplorePage.tsx
  *
  * Page: Browse and filter exercises.
- * - Provides a search bar and muscle filters to narrow exercises.
- * - Shows `ExerciseCard` list and opens `ExerciseModal` for details.
+ * Acts as entry point for Explore section.
  *
- * Notes:
- * - Uses `useExerciseFilter` hook for filtering logic.
+ * Tabs:
+ * - Exercises (default)
+ * - Community Workouts (navigates to /explore/community)
  */
 
 import { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import ExerciseCard from "../../components/ExerciseCard/ExerciseCard";
 import ExerciseModal from "../../components/ExerciseModal/ExerciseModal";
 import { useExercises } from "../../hooks/useExercises";
 import { useExerciseFilter } from "../../hooks/useExerciseFilter";
 import ExerciseSearchBar from "../../components/ExerciseSearchBar/ExerciseSearchBar";
 import MuscleFilterBar from "../../components/MuscleFilterBar/MuscleFilterBar";
+import ExploreTabs from "../../components/ExploreTabs/ExploreTabs";
 import type { Exercise } from "../../types";
 import "./ExplorePage.css";
 
 const ExplorePage = () => {
+  const location = useLocation();
   const { exercises, loading } = useExercises();
   const {
     searchQuery,
@@ -34,8 +37,14 @@ const ExplorePage = () => {
     null
   );
 
+  if (loading) {
+    return <p className="text-center">Loading exercises...</p>;
+  }
+
   return (
     <div className="container">
+      <ExploreTabs />
+
       {/* SEARCH BAR */}
       <ExerciseSearchBar value={searchQuery} onChange={setSearchQuery} />
 

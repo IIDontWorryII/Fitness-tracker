@@ -1,0 +1,19 @@
+/* Explore tabs */
+.explore-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.explore-tab {
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+  color: var(--text-muted, #666);
+  border-bottom: 2px solid transparent;
+}
+
+.explore-tab.active {
+  color: var(--text-primary, #ffffff);
+  border-bottom-color: var(--accent, #007bff);
+  font-weight: 500;
+}

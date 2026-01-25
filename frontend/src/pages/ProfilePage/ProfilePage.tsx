@@ -1,8 +1,8 @@
 import React from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-// import { useReportData } from "../../hooks/useReportData";
-
+import { deleteMyAccount } from "../../api/authClient";
+import ProfileHeader from "../../components/ProfileHeader/ProfileHeader";
 // Reusable analytics sections
 import RecentActivitySection from "../../components/ReportSections/RecentActivitySection";
 import MuscleDistributionSection from "../../components/ReportSections/MuscleDistributionSection";
@@ -11,12 +11,18 @@ import PRPreviewSection from "../../components/ReportSections/PRPreviewSection";
 import "./ProfilePage.css";
 import { useBackendReportData } from "../../hooks/useBackendReportData";
 
+import { updateMyName } from "../../api/authClient";
 import { registerPasskey } from "../../api/passkeysClient";
 import { disconnectGitHub } from "../../api/authClient";
 
 export default function ProfilePage() {
   const { user, logout, isLoading } = useAuth();
   const navigate = useNavigate();
+
+  const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
+  const [showRenameModal, setShowRenameModal] = React.useState(false);
+  const [renameValue, setRenameValue] = React.useState("");
+  const [renameSaving, setRenameSaving] = React.useState(false);
 
   // Grab analytics data (same used in ReportPage)
 
@@ -37,6 +43,39 @@ export default function ProfilePage() {
   }
 
   if (!user) return null; // ProtectedRoute handles redirect
+
+  const handleToggleSettings = () => setIsSettingsOpen((prev) => !prev);
+
+  const handleConfirmRename = async () => {
+    const trimmed = renameValue.trim();
+    if (!trimmed) return;
+
+    setRenameSaving(true);
+    try {
+      await updateMyName(trimmed);
+      await refreshUser(); // updates AuthContext user
+      setShowRenameModal(false);
+    } catch (e) {
+      alert("Failed to update username");
+    } finally {
+      setRenameSaving(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    const ok = window.confirm(
+      "This will permanently delete your account and all data. Continue?"
+    );
+    if (!ok) return;
+
+    try {
+      await deleteMyAccount();
+      await logout(); // clean, no catch
+      navigate("/login", { replace: true });
+    } catch {
+      alert("Failed to delete account");
+    }
+  };
 
   const handleLogout = async () => {
     await logout();
@@ -72,13 +111,22 @@ export default function ProfilePage() {
     }
   };
 
-  const handleActivityClick = (sessionId: string) => {
-    navigate(`/report/recent-activity`); // Or open Summary if you want
-  };
-
   return (
     <div className="profile-page">
-      <h2>My Profile</h2>
+      <ProfileHeader
+        name="Profile"
+        isMenuOpen={isSettingsOpen}
+        onToggleMenu={handleToggleSettings}
+        onCloseMenu={() => setIsSettingsOpen(false)}
+        isRenameOpen={showRenameModal}
+        renameValue={renameValue}
+        renameSaving={renameSaving}
+        onRenameChange={setRenameValue}
+        onOpenRename={() => setShowRenameModal(true)}
+        onCloseRename={() => setShowRenameModal(false)}
+        onConfirmRename={handleConfirmRename}
+        onDelete={handleDeleteAccount}
+      />
 
       <div className="profile-section">
         <div className="profile-row">
