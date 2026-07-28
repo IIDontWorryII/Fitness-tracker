@@ -22,8 +22,6 @@
 import { Router } from "express";
 import { UserModel } from "../data/users.store";
 import { hashPassword, verifyPassword } from "../utils/password";
-import { requireAuth } from "../middleware/requireAuth";
-import { updateUserName, deleteUserAccount } from "../data/users.store";
 
 const router = Router();
 
