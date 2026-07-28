@@ -12,6 +12,7 @@ pnpm-lock.yaml
 # Build outputs
 dist/
 build/
+*.tsbuildinfo
 
 # Expo / React Native
 .expo/
@@ -23,8 +24,13 @@ ios/
 logs/
 *.log
 
+# Editors
+.idea/
+*.swp
+
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 ToDo.txt

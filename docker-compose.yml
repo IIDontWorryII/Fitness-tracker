@@ -1,0 +1,42 @@
+# Brings up MongoDB, the backend API, and the web frontend together.
+#
+#   docker compose up --build
+#
+# Web app:  http://localhost:5173   API: http://localhost:4000
+#
+# Note: the frontend bakes VITE_API_BASE at build time; it defaults to
+# http://localhost:4000, which the browser reaches via the published port
+# below. Social login (GitHub/Google) additionally needs the OAuth/OIDC
+# variables from backend/.env.example passed to the backend service.
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      PORT: "4000"
+      MONGO_URI: mongodb://mongo:27017/fitness-app
+      SESSION_SECRET: change-me-in-production
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  mongo-data:
