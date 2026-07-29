@@ -34,7 +34,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
     - im Session Store gespeichert
     - bei jedem Request automatisch geladen
   */
-  if (!(req.session as any).userId) {
+  if (!req.session.userId) {
     /*
       HTTP 401 Unauthorized
 

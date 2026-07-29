@@ -42,7 +42,7 @@ const router = Router();
 */
 router.post("/", requireAuth, async (req, res) => {
   // userId stammt ausschliesslich aus der Session
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
 
   /*
     Erstellung eines neuen Historieneintrags.
@@ -85,7 +85,7 @@ router.post("/", requireAuth, async (req, res) => {
   ============================================================
 */
 router.get("/", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
 
   const history = await getWorkoutHistory(userId);
   res.json(history);
@@ -103,7 +103,7 @@ router.get("/", requireAuth, async (req, res) => {
   ============================================================
 */
 router.get("/:id", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
   const entry = await getWorkoutHistoryById(userId, req.params.id);
 
   if (!entry) {

@@ -83,7 +83,7 @@ router.post("/register", async (req, res) => {
 
       Die userId wird serverseitig in der Session gespeichert.
     */
-    (req.session as any).userId = user._id.toString();
+    req.session.userId = user._id.toString();
 
     // Rueckgabe minimaler, sicherer User-Daten
     res.json({
@@ -144,7 +144,7 @@ router.post("/login", async (req, res) => {
     }
 
     // Session setzen
-    (req.session as any).userId = user._id.toString();
+    req.session.userId = user._id.toString();
 
     // Erfolgreicher Login
     res.json({
@@ -201,12 +201,12 @@ router.post("/logout", (req, res) => {
 */
 router.get("/me", async (req, res) => {
   // Keine Session vorhanden
-  if (!(req.session as any).userId) {
+  if (!req.session.userId) {
     return res.status(401).json({ message: "Not authenticated" });
   }
 
   // User zur Session laden
-  const user = await UserModel.findById((req.session as any).userId);
+  const user = await UserModel.findById(req.session.userId);
 
   // Ungueltige oder alte Session
   if (!user) {

@@ -68,7 +68,7 @@ router.get("/github/start", (req, res) => {
   */
   const state = crypto.randomUUID();
 
-  (req.session as any).oauthState = state;
+  req.session.oauthState = state;
 
   /*
     Aufbau der GitHub Authorization URL.
@@ -106,12 +106,12 @@ router.get("/github/callback", async (req, res) => {
     - Schutz gegen CSRF
     - Stellt sicher, dass der Callback zu dieser Session gehoert
   */
-  if (typeof state !== "string" || state !== (req.session as any).oauthState) {
+  if (typeof state !== "string" || state !== req.session.oauthState) {
     return res.status(400).send("Invalid OAuth state");
   }
 
   // state wird nach Verwendung entfernt
-  delete (req.session as any).oauthState;
+  delete req.session.oauthState;
 
   if (typeof code !== "string") {
     return res.status(400).send("Missing code");
@@ -241,7 +241,7 @@ router.get("/github/callback", async (req, res) => {
     Aufbau der Session.
     Gleiches Verfahren wie bei allen anderen Login-Methoden.
   */
-  (req.session as any).userId = user._id.toString();
+  req.session.userId = user._id.toString();
 
   /*
     Redirect zurueck zum Frontend.
@@ -266,7 +266,7 @@ router.get("/github/callback", async (req, res) => {
   ============================================================
 */
 router.post("/github/disconnect", async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId;
   if (!userId) return res.sendStatus(401);
 
   const user = await UserModel.findById(userId);

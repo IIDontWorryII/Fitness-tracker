@@ -37,7 +37,7 @@ router.get("/google/start", async (req, res) => {
   const codeVerifier = generators.codeVerifier();
   const codeChallenge = generators.codeChallenge(codeVerifier);
 
-  (req.session as any).oidc = { codeVerifier };
+  req.session.oidc = { codeVerifier };
 
   const redirectUri = process.env.OIDC_REDIRECT_URL;
   if (!redirectUri) {
@@ -60,7 +60,7 @@ router.get("/google/start", async (req, res) => {
 router.get("/google/callback", async (req, res) => {
   const params = client.callbackParams(req);
 
-  const codeVerifier = (req.session as any).oidc?.codeVerifier;
+  const codeVerifier = req.session.oidc?.codeVerifier;
   if (!codeVerifier) {
     return res.status(400).send("Missing PKCE verifier");
   }
@@ -103,7 +103,7 @@ router.get("/google/callback", async (req, res) => {
     });
   }
   // Establish session (same as email/password)
-  (req.session as any).userId = user._id.toString();
+  req.session.userId = user._id.toString();
 
   res.redirect("http://localhost:5173");
 });

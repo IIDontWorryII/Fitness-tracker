@@ -84,7 +84,7 @@ router.get("/public/:id", async (req, res) => {
 */
 router.get("/", requireAuth, async (req, res) => {
   // userId stammt aus der serverseitigen Session
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
 
   const workouts = await getAllWorkouts(userId);
   res.json(workouts);
@@ -103,7 +103,7 @@ router.get("/", requireAuth, async (req, res) => {
   ============================================================
 */
 router.post("/", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
   const { name, exercises } = req.body;
 
   /*
@@ -139,7 +139,7 @@ router.post("/", requireAuth, async (req, res) => {
   ============================================================
 */
 router.get("/:id", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
   const { id } = req.params;
 
   const workout = await getWorkoutById(userId, id);
@@ -165,7 +165,7 @@ router.get("/:id", requireAuth, async (req, res) => {
   ============================================================
 */
 router.patch("/:id", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
   const { id } = req.params;
   const { name, exercises } = req.body;
 
@@ -197,7 +197,7 @@ router.patch("/:id", requireAuth, async (req, res) => {
   ============================================================
 */
 router.delete("/:id", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
   const { id } = req.params;
 
   const success = await deleteWorkout(userId, id);
@@ -214,7 +214,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
  * Clones a public workout into the users account
  */
 router.post("/:id/clone", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
   const { id } = req.params;
 
   const cloned = await cloneWorkout({
@@ -237,7 +237,7 @@ router.post("/:id/clone", requireAuth, async (req, res) => {
  * Toggles public visibility of a workout (owner only)
  */
 router.patch("/:id/visibility", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
   const { id } = req.params;
   const { isPublic } = req.body;
 
