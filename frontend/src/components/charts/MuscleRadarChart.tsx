@@ -55,7 +55,7 @@ export default function MuscleRadarChart({ data }: Props) {
           />
           )
           <Tooltip
-            formatter={(v: number, name, entry) => [
+            formatter={(_value, _name, entry: any) => [
               `${entry.payload.percentage}%`,
               "Training",
             ]}

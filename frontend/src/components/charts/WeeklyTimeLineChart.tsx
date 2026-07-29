@@ -36,7 +36,7 @@ export default function WeeklyTimeLineChart({ data }: Props) {
           />
 
           <Tooltip
-            formatter={(v: number) => `${Math.round(v)} min`}
+            formatter={(v) => `${Math.round(Number(v))} min`}
             contentStyle={{ borderRadius: 8, borderColor: "#ccc" }}
           />
 
