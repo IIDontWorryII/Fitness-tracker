@@ -7,10 +7,17 @@ The part I spent the most time on is authentication: besides the usual email \+ 
 The app and this README are in English.
 
 ## What it does
+![Training statistics and muscle-group breakdown](docs/Screenshots/Statistics.png)
 
 - Plan and manage workouts, and log training sessions.  
+<p align="center">
+  <img src="docs/Screenshots/WorkoutList.png" width="240" alt="Workout list">
+  <img src="docs/Screenshots/WorkoutRunning.png" width="240" alt="Running a workout">
+  <img src="docs/Screenshots/WorkoutSummary.png" width="240" alt="Workout summary">
+</p>
+
 - A workout history so you can look back at past sessions.  
-- An exercise catalogue (seeded into the database) with an image per muscle group.  
+- An exercise catalogue (seeded into the database) with an image per muscle group.  ![Browsing the exercise catalogue](docs/Screenshots/BrowseExercise.png)
 - A breakdown of how your training splits across muscle groups, drawn as charts.  
 - Four ways to sign in — email \+ password, GitHub (OAuth), Google (OIDC) or a passkey (WebAuthn). GitHub sign-in can also be linked to an existing account.  
 - A web app and a React Native mobile app, both on the same backend API.
@@ -93,6 +100,7 @@ npx expo start
 Point the API base at your machine — note that the Android emulator reaches your host through `10.0.2.2` rather than `localhost`.
 
 ## Authentication
+![Sign-in screen with all four auth methods](docs/Screenshots/Authentification.png)
 
 This is the part I put the most into, so a little more detail. All four methods end up creating the same server-side session (the `fitnessapp.sid` cookie):
 
