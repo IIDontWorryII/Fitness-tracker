@@ -203,17 +203,17 @@ router.get("/github/callback", async (req, res) => {
   if (!user) {
     user = await UserModel.findOne({ email: normalizedEmail });
 
-    /*
-      Sicherheitscheck:
-      Verhindert, dass ein Account mit zwei GitHub IDs verknuepft wird.
-    */
-    if (user.oauth?.github?.id && user.oauth.github.id !== ghUser.id) {
-      return res
-        .status(409)
-        .send("This account is already linked to a different GitHub user");
-    }
-
     if (user) {
+      /*
+        Sicherheitscheck:
+        Verhindert, dass ein Account mit zwei GitHub IDs verknuepft wird.
+      */
+      if (user.oauth?.github?.id && user.oauth.github.id !== ghUser.id) {
+        return res
+          .status(409)
+          .send("This account is already linked to a different GitHub user");
+      }
+
       user.oauth ??= {};
       user.oauth.github = {
         id: ghUser.id,
