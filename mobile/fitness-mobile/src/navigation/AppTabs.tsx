@@ -1,15 +1,65 @@
+/*
+  ============================================================
+  Datei: AppTabs.tsx (Mobile App)
+
+  Rolle im Projekt:
+  Diese Datei definiert die Haupt-Navigation der Mobile App
+  in Form einer Bottom Tab Navigation.
+
+  Zweck:
+  - Ermöglicht den Wechsel zwischen Hauptbereichen der App
+  - Stellt dauerhaft sichtbare Navigation bereit
+  - Kapselt die globale App-Struktur
+
+  Enthaltene Tabs:
+  - MyWorkouts (Workout Verwaltung)
+  - Exercises (Uebungsliste)
+  - Report (Auswertungen und Statistiken)
+  - Profile (Benutzerprofil)
+
+  Architekturentscheidung:
+  - Bottom Tabs fuer Hauptbereiche
+  - Stack Navigation innerhalb einzelner Tabs
+  - Trennung von Navigation und Screen-Logik
+
+  Abhaengigkeiten:
+  - React Navigation (Bottom Tabs)
+  - Expo Vector Icons fuer Icons
+  ============================================================
+*/
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+/*
+  Import der Screens und Stacks,
+  die in den Tabs angezeigt werden.
+*/
 import MyWorkoutsScreen from "../screens/MyWorkoutsScreen";
 import ExercisesScreen from "../screens/ExercisesScreen";
 import ReportStack from "./ReportStack";
 import ProfileScreen from "../screens/ProfileScreen";
 import MyWorkoutsStack from "./MyWorkoutsStack";
 
+/*
+  Erstellung des Tab Navigators.
+
+  Dieser Navigator verwaltet:
+  - Tabs
+  - aktive Route
+  - Icons
+  - Styling der Tab Bar
+*/
 const Tab = createBottomTabNavigator();
 
+/*
+  ============================================================
+  AppTabs Komponente
+  ============================================================
+
+  Diese Komponente wird nach erfolgreicher Authentifizierung
+  angezeigt und bildet das Hauptgeruest der App.
+*/
 export default function AppTabs() {
   return (
     <Tab.Navigator

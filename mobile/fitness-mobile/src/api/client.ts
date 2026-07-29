@@ -13,7 +13,7 @@ export const API_BASE = LAN_IP;
 
 export const api = axios.create({
   baseURL: API_BASE,
-  withCredentials: true, // 🔴 REQUIRED for session cookies
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -29,5 +29,5 @@ api.interceptors.response.use(
       throw err.response.data ?? err;
     }
     throw err;
-  }
+  },
 );

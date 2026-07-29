@@ -1,3 +1,25 @@
+/*
+  ============================================================
+  Datei: ReportStack.tsx (Mobile App)
+
+  Rolle im Projekt:
+  Diese Datei definiert die Stack-Navigation fuer den
+  Report-Bereich der Mobile App.
+
+  Zweck:
+  - Navigation zwischen Auswertungs-Screens
+  - Anzeige von Trainingshistorie
+  - Detailansicht einzelner Workout Sessions
+
+  Enthaltene Screens:
+  - WorkoutHistory (Liste aller Sessions)
+  - WorkoutSummary (Detailansicht einer Session)
+
+  Architekturentscheidung:
+  - Eigener Stack innerhalb des Report Tabs
+  - Klare Trennung von Workouts und Reports
+  ============================================================
+*/
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import WorkoutHistoryScreen from "../screens/WorkoutHistoryScreen";
 import WorkoutSummaryScreen from "../screens/WorkoutSummaryScreen";

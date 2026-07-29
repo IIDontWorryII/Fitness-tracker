@@ -22,8 +22,7 @@
 import { Router } from "express";
 import { UserModel } from "../data/users.store";
 import { hashPassword, verifyPassword } from "../utils/password";
-import { requireAuth } from "../middleware/requireAuth";
-import { updateUserName, deleteUserAccount } from "../data/users.store";
+import { toAuthUser } from "../utils/authUser";
 
 const router = Router();
 
@@ -85,18 +84,10 @@ router.post("/register", async (req, res) => {
 
       Die userId wird serverseitig in der Session gespeichert.
     */
-    (req.session as any).userId = user._id.toString();
+    req.session.userId = user._id.toString();
 
     // Rueckgabe minimaler, sicherer User-Daten
-    res.json({
-      id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-
-      githubConnected: Boolean(user.oauth?.github),
-      googleConnected: Boolean(user.oidc?.google),
-      passkeysCount: user.passkeys?.length ?? 0,
-    });
+    res.json(toAuthUser(user));
   } catch (err) {
     console.error("Register error:", err);
     res.status(500).json({ message: "Internal server error" });
@@ -146,18 +137,10 @@ router.post("/login", async (req, res) => {
     }
 
     // Session setzen
-    (req.session as any).userId = user._id.toString();
+    req.session.userId = user._id.toString();
 
     // Erfolgreicher Login
-    res.json({
-      id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-
-      githubConnected: Boolean(user.oauth?.github),
-      googleConnected: Boolean(user.oidc?.google),
-      passkeysCount: user.passkeys?.length ?? 0,
-    });
+    res.json(toAuthUser(user));
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ message: "Internal server error" });
@@ -203,12 +186,12 @@ router.post("/logout", (req, res) => {
 */
 router.get("/me", async (req, res) => {
   // Keine Session vorhanden
-  if (!(req.session as any).userId) {
+  if (!req.session.userId) {
     return res.status(401).json({ message: "Not authenticated" });
   }
 
   // User zur Session laden
-  const user = await UserModel.findById((req.session as any).userId);
+  const user = await UserModel.findById(req.session.userId);
 
   // Ungueltige oder alte Session
   if (!user) {
@@ -216,17 +199,7 @@ router.get("/me", async (req, res) => {
   }
 
   // Rueckgabe sicherer User-Daten
-  res.json({
-    id: user._id.toString(),
-    name: user.name,
-    email: user.email,
-
-    githubConnected: typeof user.oauth?.github?.id === "number",
-    googleConnected:
-      typeof user.oidc?.google?.sub === "string" &&
-      user.oidc.google.sub.length > 0,
-    passkeysCount: Array.isArray(user.passkeys) ? user.passkeys.length : 0,
-  });
+  res.json(toAuthUser(user));
 });
 
 export default router;

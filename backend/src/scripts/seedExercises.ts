@@ -14,7 +14,7 @@ async function seed() {
 
   await Exercise.insertMany(
     allExercises.map((ex) => ({
-      slug: ex.id, // KEEP YOUR EXISTING IDS
+      slug: ex.id,
       name: ex.name,
       muscle: ex.muscle,
       thumbnail: ex.thumbnail,
@@ -23,7 +23,7 @@ async function seed() {
     }))
   );
 
-  console.log("✅ Exercises seeded");
+  console.log("Exercises seeded");
   await mongoose.disconnect();
 }
 

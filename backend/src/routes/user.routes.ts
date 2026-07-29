@@ -8,7 +8,7 @@ const router = Router();
  * PATCH /api/user/me
  */
 router.patch("/me", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
   const { name } = req.body;
 
   const updated = await updateUserName(userId, name);
@@ -27,7 +27,7 @@ router.patch("/me", requireAuth, async (req, res) => {
  * DELETE /api/user/me
  */
 router.delete("/me", requireAuth, async (req, res) => {
-  const userId = (req.session as any).userId;
+  const userId = req.session.userId!;
 
   await deleteUserAccount(userId);
 

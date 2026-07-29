@@ -67,9 +67,6 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true, service: "fitness-backend" });
 });
 
-// Placeholder: workouts CRUD will be added next step
-// app.get("/api/workouts", ...)
-
 const PORT = process.env.PORT ? Number(process.env.PORT) : 4000;
 
 const MONGO_URI =

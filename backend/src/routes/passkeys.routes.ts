@@ -90,7 +90,7 @@ function toBase64url(input: Uint8Array): string {
   - Benutzer ist bereits authentifiziert
 */
 router.post("/register/start", requireAuth, async (req, res) => {
-  const user = await UserModel.findById((req.session as any).userId);
+  const user = await UserModel.findById(req.session.userId);
   if (!user) return res.sendStatus(401);
 
   const passkeys = (user.passkeys as StoredPasskey[] | undefined) ?? [];
@@ -122,7 +122,7 @@ router.post("/register/start", requireAuth, async (req, res) => {
     Speicherung der Challenge in der Session.
     Wird spaeter zur Verifikation benoetigt.
   */
-  (req.session as any).passkeyRegistration = {
+  req.session.passkeyRegistration = {
     challenge: options.challenge,
   };
 
@@ -134,7 +134,7 @@ router.post("/register/start", requireAuth, async (req, res) => {
   POST /api/auth/passkeys/register/finish
 */
 router.post("/register/finish", requireAuth, async (req, res) => {
-  const expectedChallenge = (req.session as any).passkeyRegistration?.challenge;
+  const expectedChallenge = req.session.passkeyRegistration?.challenge;
 
   if (!expectedChallenge) {
     return res.status(400).json({ message: "Missing challenge" });
@@ -158,7 +158,7 @@ router.post("/register/finish", requireAuth, async (req, res) => {
 
   const { credential } = verification.registrationInfo;
 
-  const user = await UserModel.findById((req.session as any).userId);
+  const user = await UserModel.findById(req.session.userId);
   if (!user) return res.sendStatus(401);
 
   user.passkeys ??= [];
@@ -170,7 +170,7 @@ router.post("/register/finish", requireAuth, async (req, res) => {
   });
 
   await user.save();
-  delete (req.session as any).passkeyRegistration;
+  delete req.session.passkeyRegistration;
 
   res.json({ ok: true });
 });
@@ -189,7 +189,7 @@ router.post("/login/start", async (req, res) => {
     userVerification: "preferred",
   });
 
-  (req.session as any).passkeyLogin = {
+  req.session.passkeyLogin = {
     challenge: options.challenge,
   };
 
@@ -201,7 +201,7 @@ router.post("/login/start", async (req, res) => {
   POST /api/auth/passkeys/login/finish
 */
 router.post("/login/finish", async (req, res) => {
-  const expectedChallenge = (req.session as any).passkeyLogin?.challenge;
+  const expectedChallenge = req.session.passkeyLogin?.challenge;
   if (!expectedChallenge) {
     return res.status(400).json({ message: "Missing challenge" });
   }
@@ -260,8 +260,8 @@ router.post("/login/finish", async (req, res) => {
     Aufbau einer normalen Session.
     Identisch zu Email, OAuth und OIDC Login.
   */
-  (req.session as any).userId = user._id.toString();
-  delete (req.session as any).passkeyLogin;
+  req.session.userId = user._id.toString();
+  delete req.session.passkeyLogin;
 
   res.json({ ok: true });
 });
