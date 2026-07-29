@@ -6,11 +6,10 @@
  * Responsibilities:
  * - Fetch public workouts
  * - Display them using PublicWorkoutCard
- * - Provide placeholder clone handler
+ * - Clone a public workout into the current user's account
  *
  * Notes:
  * - Layout and CSS intentionally mirror WorkoutsPage
- * - Clone logic is NOT implemented yet
  */
 
 import { useEffect, useState, useMemo } from "react";
